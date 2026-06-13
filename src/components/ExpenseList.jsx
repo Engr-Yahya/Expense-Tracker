@@ -17,7 +17,7 @@ export default function ExpenseList() {
 
   return (
     <section aria-labelledby="transactions-heading">
-      <div className="bg-zinc-900 rounded-2xl border border-zinc-800">
+      <div className="bg-zinc-950 rounded-2xl border border-zinc-800/60">
         <div className="px-6 py-4 border-b border-zinc-800 flex items-center justify-between">
           <h2 className="text-base font-semibold text-white tracking-tight">
             Transactions

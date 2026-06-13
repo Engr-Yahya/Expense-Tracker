@@ -3,57 +3,51 @@
 body {
   background-color: #000;
 }
-/* React Datepicker Dark Theme */
 
-.react-datepicker {
-  background: #111 !important;
-  border: 1px solid #27272a !important;
-  border-radius: 18px !important;
-  overflow: hidden;
-  font-family: inherit !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+/* Custom Scrollbars globally */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.react-datepicker__header {
-  background: #111 !important;
-  border-bottom: 1px solid #27272a !important;
-  padding: 12px 0 !important;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.react-datepicker__current-month,
-.react-datepicker__day-name,
-.react-datepicker-time__header {
-  color: #d1d1d1 !important;
-  font-weight: 600;
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
 }
 
-.react-datepicker__month-text {
-  color: #a1a1aa !important;
-  border-radius: 10px !important;
-  transition: all 0.15s ease;
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
 }
 
-.react-datepicker__month-text:hover {
-  background: #27272a !important;
-  color: white !important;
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #27272a transparent;
 }
 
-.react-datepicker__month-text--selected,
-.react-datepicker__month-text--keyboard-selected {
-  background: #d1d1d1 !important;
-  color: black !important;
-  font-weight: 700 !important;
+.react-select__menu-list {
+  scrollbar-width: thin;
+  scrollbar-color: #27272a transparent;
 }
 
-.react-datepicker__navigation-icon::before {
-  border-color: #71717a !important;
+.react-select__menu-list::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.react-datepicker__navigation:hover
-  .react-datepicker__navigation-icon::before {
-  border-color: #d1d1d1 !important;
+.react-select__menu-list::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.react-datepicker__triangle {
-  display: none !important;
+.react-select__menu-list::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 9999px;
+}
+
+.react-select__menu-list::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
 }

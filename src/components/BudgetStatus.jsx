@@ -42,7 +42,7 @@ export default function BudgetStatus() {
   }
 
   return (
-    <div className="bg-zinc-900 rounded-2xl border border-zinc-800 p-6">
+    <div className="bg-zinc-950 rounded-2xl border border-zinc-800/60 p-6">
       <h2 className="text-base font-semibold text-[#d1d1d1] mb-5 tracking-tight">
         Monthly Budget Status
       </h2>

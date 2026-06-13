@@ -7,38 +7,41 @@ const selectStyles = {
     ...base,
     backgroundColor: "#09090b",
     border: `1px solid ${state.isFocused ? "#d1d1d1" : "#27272a"}`,
-    borderRadius: "14px",
-    minHeight: "44px",
+    borderRadius: "12px",
     minWidth: "220px",
+    padding: "2px 4px",
     boxShadow: "none",
-    padding: "0 6px",
-    transition: "all 0.2s ease",
-    cursor: "pointer",
-
+    transition: "border-color 0.2s ease",
     "&:hover": {
-      borderColor: "#52525b",
+      borderColor: "#d1d1d1",
     },
+    cursor: "pointer",
   }),
 
   menu: (base) => ({
     ...base,
     backgroundColor: "#111",
     border: "1px solid #27272a",
-    borderRadius: "14px",
+    borderRadius: "12px",
     overflow: "hidden",
-    padding: "6px",
+    padding: "4px",
     boxShadow: "0 12px 30px rgba(0,0,0,0.35)",
+  }),
+
+  menuList: (base) => ({
+    ...base,
+    maxHeight: "220px",
+    padding: "0",
   }),
 
   option: (base, state) => ({
     ...base,
-    backgroundColor: state.isFocused
-      ? "#1f1f23"
-      : state.isSelected
-        ? "#d1d1d1"
+    backgroundColor: state.isSelected
+      ? "#d1d1d1"
+      : state.isFocused
+        ? "#1f1f23"
         : "transparent",
-
-    color: state.isSelected ? "#000" : "#d4d4d8",
+    color: state.isSelected ? "#000" : state.isFocused ? "#f8fafc" : "#d4d4d8",
     borderRadius: "10px",
     fontSize: "14px",
     padding: "10px 12px",
@@ -127,20 +130,17 @@ export default function FilterBar() {
         isClearable
         popperPlacement="bottom-start"
         className="
-          h-[44px]
-          w-[220px]
-          rounded-[14px]
           border
-          border-zinc-800
-          bg-zinc-950
-          px-4
-          text-sm
+          border-zinc-700
           text-[#d1d1d1]
-          placeholder:text-zinc-500
-          outline-none
-          transition-all
-          duration-200
+          placeholder-zinc-600
+          rounded-xl
+          px-4
+          py-2.5
+          text-sm
+          focus:outline-none
           focus:border-[#d1d1d1]
+          transition
           hover:border-zinc-600
         "
       />
@@ -152,18 +152,20 @@ export default function FilterBar() {
             setFilterMonth("");
           }}
           className="
-            h-[44px]
-            rounded-[14px]
             border
-            border-zinc-800
-            bg-zinc-950
-            px-4
-            text-sm
+            border-zinc-700
             text-zinc-400
-            transition-all
-            duration-200
+            placeholder-zinc-600
+            rounded-xl
+            px-4
+            py-2.5
+            text-sm
+            transition
             hover:border-zinc-600
             hover:text-[#d1d1d1]
+            active:scale-95
+            cursor-pointer
+            w-full
           "
         >
           Clear Filters

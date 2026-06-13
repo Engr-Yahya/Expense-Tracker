@@ -3,7 +3,7 @@ import useExpenseStore, { CATEGORIES } from "../store/useExpenseStore";
 import { getCurrencySymbol } from "../utils/formatCurrency";
 
 const inputClass =
-  "bg-zinc-900 border border-zinc-700 text-[#d1d1d1] placeholder-zinc-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#d1d1d1] transition w-full";
+  "bg-zinc-900 border border-zinc-700 text-[#d1d1d1] placeholder-zinc-600 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#d1d1d1] transition w-full";
 
 export default function BudgetSettings() {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +44,7 @@ export default function BudgetSettings() {
     <>
       <button
         onClick={handleOpen}
-        className="flex items-center gap-2 h-[44px] rounded-[14px] border border-zinc-800 bg-zinc-950 px-4 text-sm text-zinc-400 transition-all duration-200 hover:border-zinc-600 hover:text-[#d1d1d1]"
+        className="flex items-center gap-2 h-[44px] rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm text-zinc-400 transition-all duration-200 hover:border-zinc-600 hover:text-[#d1d1d1]"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
@@ -88,13 +88,13 @@ export default function BudgetSettings() {
             <div className="sticky bottom-0 bg-zinc-900 border-t border-zinc-800 px-6 py-4 flex gap-3">
               <button
                 onClick={() => setIsOpen(false)}
-                className="flex-1 h-10 rounded-lg border border-zinc-700 text-sm font-medium text-zinc-400 hover:text-[#d1d1d1] transition"
+                className="flex-1 h-10 rounded-xl border border-zinc-700 text-sm font-medium text-zinc-400 hover:border-zinc-600 hover:text-[#d1d1d1] transition"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
-                className="flex-1 h-10 rounded-lg bg-[#d1d1d1] text-black text-sm font-medium hover:bg-white transition"
+                className="flex-1 h-10 rounded-xl bg-[#d1d1d1] text-black text-sm font-medium hover:bg-white transition"
               >
                 Save Budgets
               </button>

@@ -12,18 +12,18 @@ const currencyOptions = CURRENCIES.map((curr) => ({
 const selectStyles = {
   control: (base, state) => ({
     ...base,
-    backgroundColor: "#09090b",
-    border: `1px solid ${state.isFocused ? "#d1d1d1" : "#27272a"}`,
-    borderRadius: "14px",
+    backgroundColor: "#18181b",
+    border: `1px solid ${state.isFocused ? "#d1d1d1" : "#3f3f46"}`,
+    borderRadius: "12px",
     minHeight: "44px",
     minWidth: "280px",
     boxShadow: "none",
-    padding: "0 6px",
-    transition: "all 0.2s ease",
+    padding: "2px 4px",
+    transition: "border-color 0.2s ease",
     cursor: "pointer",
 
     "&:hover": {
-      borderColor: "#52525b",
+      borderColor: "#d1d1d1",
     },
   }),
 
@@ -31,21 +31,22 @@ const selectStyles = {
     ...base,
     backgroundColor: "#111",
     border: "1px solid #27272a",
-    borderRadius: "14px",
+    borderRadius: "12px",
     overflow: "hidden",
     padding: "6px",
     boxShadow: "0 12px 30px rgba(0,0,0,0.35)",
   }),
 
+  menuList: (base) => ({
+    ...base,
+    maxHeight: "220px",
+    padding: "0",
+  }),
+
   option: (base, state) => ({
     ...base,
-    backgroundColor: state.isFocused
-      ? "#1f1f23"
-      : state.isSelected
-        ? "#d1d1d1"
-        : "transparent",
-
-    color: state.isSelected ? "#000" : "#d4d4d8",
+    backgroundColor: state.isSelected ? "#d1d1d1" : state.isFocused ? "#1f1f23" : "transparent",
+    color: state.isSelected ? "#000" : state.isFocused ? "#f8fafc" : "#d4d4d8",
     borderRadius: "10px",
     fontSize: "14px",
     padding: "10px 12px",

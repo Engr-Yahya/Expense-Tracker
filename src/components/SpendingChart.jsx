@@ -59,7 +59,7 @@ export default function SpendingChart() {
 
   if (!data.length) {
     return (
-      <div className="bg-zinc-900 rounded-2xl p-6 border border-zinc-800 flex items-center justify-center h-52">
+      <div className="bg-zinc-950 rounded-2xl p-6 border border-zinc-800/60 flex items-center justify-center h-52">
         <p className="text-sm text-zinc-500">
           Add expenses to see your spending breakdown
         </p>
@@ -68,7 +68,7 @@ export default function SpendingChart() {
   }
 
   return (
-    <div className="bg-zinc-900 rounded-2xl p-6 border border-zinc-800 min-w-0">
+    <div className="bg-zinc-950 rounded-2xl p-6 border border-zinc-800/60 min-w-0">
       <h2 className="text-base font-semibold text-[#d1d1d1] mb-5 tracking-tight">
         Spending Breakdown
       </h2>
