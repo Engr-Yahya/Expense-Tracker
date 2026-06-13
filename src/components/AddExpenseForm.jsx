@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import Select from "react-select";
 import useExpenseStore, { CATEGORIES } from "../store/useExpenseStore";
 import CurrencyInput from "react-currency-input-field";
+import { getCurrencySymbol } from "../utils/formatCurrency";
 const MAX_TITLE_LENGTH = 50;
 const MAX_AMOUNT = 1000000;
 const STEP = 1;
@@ -87,6 +88,7 @@ export default function AddExpenseForm() {
   const [error, setError] = useState("");
 
   const addExpense = useExpenseStore((s) => s.addExpense);
+  const currency = useExpenseStore((s) => s.currency);
 
   const updateAmount = (value) => {
     value = value.replace(/[^0-9.]/g, "");
@@ -232,10 +234,10 @@ export default function AddExpenseForm() {
               decimalScale={2}
               allowNegativeValue={false}
               maxLength={12}
-              prefix="$ "
+              prefix={`${getCurrencySymbol(currency)} `}
               intlConfig={{
                 locale: "en-US",
-                currency: "USD",
+                currency: currency,
               }}
               onValueChange={(value) => {
                 setError("");
@@ -257,17 +259,24 @@ export default function AddExpenseForm() {
         </div>
 
         {/* Date */}
-        <DatePicker
-          selected={form.date}
-          onChange={(date) =>
-            setForm((f) => ({
-              ...f,
-              date,
-            }))
-          }
-          dateFormat="MMM dd, yyyy"
-          className={inputClass}
-        />
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-medium text-zinc-500 tracking-wide">
+            Date
+          </label>
+          <DatePicker
+            selected={form.date}
+            onChange={(date) =>
+              setForm((f) => ({
+                ...f,
+                date,
+              }))
+            }
+            dateFormat="MMM dd, yyyy"
+            className={inputClass}
+            placeholderText="Select date"
+            popperPlacement="bottom-start"
+          />
+        </div>
 
         {/* Category */}
         <Select

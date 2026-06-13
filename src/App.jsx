@@ -3,6 +3,10 @@ import SummaryCards from "./components/SummaryCards";
 import FilterBar from "./components/FilterBar";
 import SpendingChart from "./components/SpendingChart";
 import ExpenseList from "./components/ExpenseList";
+import BudgetSettings from "./components/BudgetSettings";
+import BudgetStatus from "./components/BudgetStatus";
+import CurrencySelector from "./components/CurrencySelector";
+import "./styles/datepicker.css";
 
 export default function App() {
   return (
@@ -19,7 +23,14 @@ export default function App() {
           <p className="text-sm text-zinc-600 mt-2">Stay on top of every dollar you spend</p>
         </div>
 
+        <div className="flex justify-end gap-3">
+          <CurrencySelector />
+          <BudgetSettings />
+        </div>
+
         <SummaryCards />
+
+        <BudgetStatus />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-1">

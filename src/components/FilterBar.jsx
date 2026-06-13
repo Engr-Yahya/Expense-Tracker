@@ -1,7 +1,5 @@
 import Select from "react-select";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
 import useExpenseStore, { CATEGORIES } from "../store/useExpenseStore";
 
 const selectStyles = {

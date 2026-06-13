@@ -8,34 +8,36 @@ import {
 } from "recharts";
 import useExpenseStore from "../store/useExpenseStore";
 import { CATEGORY_COLORS } from "../constants/categoryColors";
-
-const CustomTooltip = ({ active, payload }) => {
-  if (!active || !payload?.length) return null;
-
-  const item = payload[0];
-  const color =
-    CATEGORY_COLORS[item.name] || CATEGORY_COLORS.Other;
-
-  return (
-    <div className="bg-zinc-900 border border-zinc-700 rounded-xl px-3 py-2 text-sm shadow-2xl">
-      <p className="text-zinc-200 font-medium">
-        {item.name}
-      </p>
-
-      <p
-        className="font-semibold mt-1"
-        style={{ color }}
-      >
-        ${item.value.toFixed(2)}
-      </p>
-    </div>
-  );
-};
+import { formatCurrency } from "../utils/formatCurrency";
 
 export default function SpendingChart() {
   const expenses = useExpenseStore((s) => s.expenses);
   const filterCategory = useExpenseStore((s) => s.filterCategory);
   const filterMonth = useExpenseStore((s) => s.filterMonth);
+  const currency = useExpenseStore((s) => s.currency);
+
+  const CustomTooltip = ({ active, payload }) => {
+    if (!active || !payload?.length) return null;
+
+    const item = payload[0];
+    const color =
+      CATEGORY_COLORS[item.name] || CATEGORY_COLORS.Other;
+
+    return (
+      <div className="bg-zinc-900 border border-zinc-700 rounded-xl px-3 py-2 text-sm shadow-2xl">
+        <p className="text-zinc-200 font-medium">
+          {item.name}
+        </p>
+
+        <p
+          className="font-semibold mt-1"
+          style={{ color }}
+        >
+          {formatCurrency(item.value, currency)}
+        </p>
+      </div>
+    );
+  };
 
   const data = useMemo(() => {
     const filtered = expenses.filter((e) => {
@@ -125,7 +127,7 @@ export default function SpendingChart() {
                 </div>
 
                 <span className="text-xs text-zinc-500 tabular-nums">
-                  ${entry.value.toFixed(0)}
+                  {formatCurrency(entry.value, currency)}
                 </span>
               </div>
             );

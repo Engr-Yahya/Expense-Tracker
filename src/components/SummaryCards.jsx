@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import useExpenseStore from "../store/useExpenseStore";
+import { formatCurrency } from "../utils/formatCurrency";
 
 const Card = ({ label, value, sub, valueClass }) => (
   <div className="bg-zinc-950 rounded-2xl p-5 border border-zinc-800/60 flex flex-col gap-1 hover:border-zinc-700 transition-colors">
@@ -17,6 +18,7 @@ export default function SummaryCards() {
   const expenses = useExpenseStore((s) => s.expenses);
   const filterCategory = useExpenseStore((s) => s.filterCategory);
   const filterMonth = useExpenseStore((s) => s.filterMonth);
+  const currency = useExpenseStore((s) => s.currency);
 
   const filteredExpenses = useMemo(() => {
     return expenses.filter((e) => {
@@ -46,7 +48,7 @@ export default function SummaryCards() {
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
       <Card
         label="Total Spent"
-        value={`$${total.toFixed(2)}`}
+        value={formatCurrency(total, currency)}
         sub="filtered period"
         valueClass="text-[#d1d1d1]"
       />

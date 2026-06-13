@@ -1,4 +1,5 @@
 import useExpenseStore from "../store/useExpenseStore";
+import { formatCurrency } from "../utils/formatCurrency";
 
 const CATEGORY_STYLES = {
   Food:          "bg-orange-950 text-orange-400 border-orange-900",
@@ -12,6 +13,7 @@ const CATEGORY_STYLES = {
 
 export default function ExpenseItem({ expense }) {
   const deleteExpense = useExpenseStore((s) => s.deleteExpense);
+  const currency = useExpenseStore((s) => s.currency);
 
   return (
     <div className="flex items-center justify-between px-4 py-3 hover:bg-zinc-800/50 rounded-xl transition group">
@@ -25,7 +27,7 @@ export default function ExpenseItem({ expense }) {
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <p className="text-sm font-semibold text-white">${expense.amount.toFixed(2)}</p>
+        <p className="text-sm font-semibold text-white">{formatCurrency(expense.amount, currency)}</p>
         <button
           onClick={() => deleteExpense(expense.id)}
           className="text-zinc-700 hover:text-red-400 text-zinc-500 hover:text-red-400 transition text-xl leading-none"
