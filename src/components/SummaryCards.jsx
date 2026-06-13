@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import useExpenseStore from "../store/useExpenseStore";
 
 const Card = ({ label, value, sub, valueClass }) => (
@@ -13,9 +14,33 @@ const Card = ({ label, value, sub, valueClass }) => (
 );
 
 export default function SummaryCards() {
-  const total = useExpenseStore((s) => s.getTotalSpent());
-  const biggest = useExpenseStore((s) => s.getBiggestCategory());
-  const count = useExpenseStore((s) => s.getFilteredExpenses().length);
+  const expenses = useExpenseStore((s) => s.expenses);
+  const filterCategory = useExpenseStore((s) => s.filterCategory);
+  const filterMonth = useExpenseStore((s) => s.filterMonth);
+
+  const filteredExpenses = useMemo(() => {
+    return expenses.filter((e) => {
+      const matchCat = filterCategory === "All" || e.category === filterCategory;
+      const matchMonth = !filterMonth || e.date.startsWith(filterMonth);
+      return matchCat && matchMonth;
+    });
+  }, [expenses, filterCategory, filterMonth]);
+
+  const total = useMemo(
+    () => filteredExpenses.reduce((sum, e) => sum + e.amount, 0),
+    [filteredExpenses],
+  );
+
+  const biggest = useMemo(() => {
+    if (!filteredExpenses.length) return "—";
+    const totals = {};
+    filteredExpenses.forEach((e) => {
+      totals[e.category] = (totals[e.category] || 0) + e.amount;
+    });
+    return Object.entries(totals).sort((a, b) => b[1] - a[1])[0][0];
+  }, [filteredExpenses]);
+
+  const count = filteredExpenses.length;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">

@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   PieChart,
   Pie,
@@ -32,11 +33,27 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 export default function SpendingChart() {
-  const getChartData = useExpenseStore(
-    (s) => s.getChartData
-  );
+  const expenses = useExpenseStore((s) => s.expenses);
+  const filterCategory = useExpenseStore((s) => s.filterCategory);
+  const filterMonth = useExpenseStore((s) => s.filterMonth);
 
-  const data = getChartData();
+  const data = useMemo(() => {
+    const filtered = expenses.filter((e) => {
+      const matchCat = filterCategory === "All" || e.category === filterCategory;
+      const matchMonth = !filterMonth || e.date.startsWith(filterMonth);
+      return matchCat && matchMonth;
+    });
+
+    const totals = {};
+    filtered.forEach((e) => {
+      totals[e.category] = (totals[e.category] || 0) + e.amount;
+    });
+
+    return Object.entries(totals).map(([name, value]) => ({
+      name,
+      value: +value.toFixed(2),
+    }));
+  }, [expenses, filterCategory, filterMonth]);
 
   if (!data.length) {
     return (
@@ -49,14 +66,14 @@ export default function SpendingChart() {
   }
 
   return (
-    <div className="bg-zinc-900 rounded-2xl p-6 border border-zinc-800">
+    <div className="bg-zinc-900 rounded-2xl p-6 border border-zinc-800 min-w-0">
       <h2 className="text-base font-semibold text-[#d1d1d1] mb-5 tracking-tight">
         Spending Breakdown
       </h2>
 
       <div className="flex flex-col lg:flex-row items-center gap-8">
-        <div className="w-full h-[220px]">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="w-full h-[220px] min-w-0 min-h-0">
+          <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
             <PieChart>
               <Pie
                 data={data}
