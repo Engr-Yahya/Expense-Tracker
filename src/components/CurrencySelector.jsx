@@ -16,15 +16,20 @@ const selectStyles = {
     border: `1px solid ${state.isFocused ? "#d1d1d1" : "#3f3f46"}`,
     borderRadius: "12px",
     minHeight: "44px",
-    minWidth: "280px",
+    minWidth: "0",       // removed hardcoded 280px
+    width: "100%",
     boxShadow: "none",
     padding: "2px 4px",
     transition: "border-color 0.2s ease",
     cursor: "pointer",
-
     "&:hover": {
       borderColor: "#d1d1d1",
     },
+  }),
+
+  container: (base) => ({
+    ...base,
+    width: "100%",
   }),
 
   menu: (base) => ({
@@ -73,7 +78,6 @@ const selectStyles = {
   dropdownIndicator: (base) => ({
     ...base,
     color: "#71717a",
-
     "&:hover": {
       color: "#d1d1d1",
     },
@@ -87,13 +91,15 @@ export default function CurrencySelector() {
   const selectedOption = currencyOptions.find((opt) => opt.value === currency);
 
   return (
-    <Select
-      options={currencyOptions}
-      value={selectedOption}
-      onChange={(opt) => opt && setCurrency(opt.value)}
-      styles={selectStyles}
-      isSearchable={true}
-      placeholder="Select Currency"
-    />
+    <div className="w-full sm:w-auto sm:min-w-[280px]">
+      <Select
+        options={currencyOptions}
+        value={selectedOption}
+        onChange={(opt) => opt && setCurrency(opt.value)}
+        styles={selectStyles}
+        isSearchable={true}
+        placeholder="Select Currency"
+      />
+    </div>
   );
 }

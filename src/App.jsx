@@ -17,13 +17,14 @@ export default function App() {
           <p className="text-xs font-semibold tracking-[0.25em] text-zinc-600 uppercase mb-2">
             Personal Finance
           </p>
-          <h1 className="text-5xl font-bold tracking-tight text-[#d1d1d1]">
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-[#d1d1d1]">
             Expense Tracker
           </h1>
           <p className="text-sm text-zinc-600 mt-2">Stay on top of every dollar you spend</p>
         </div>
 
-        <div className="flex justify-end gap-3">
+        {/* Controls row — stacks vertically on mobile, right-aligned on desktop */}
+        <div className="flex flex-col sm:flex-row sm:justify-end gap-3">
           <CurrencySelector />
           <BudgetSettings />
         </div>

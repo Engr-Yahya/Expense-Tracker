@@ -220,7 +220,6 @@ export default function AddExpenseForm() {
         </div>
 
         {/* Amount */}
-        {/* Amount */}
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
             <label className="text-xs font-medium text-zinc-500 tracking-wide">

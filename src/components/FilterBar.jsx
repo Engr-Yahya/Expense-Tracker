@@ -8,7 +8,8 @@ const selectStyles = {
     backgroundColor: "#09090b",
     border: `1px solid ${state.isFocused ? "#d1d1d1" : "#27272a"}`,
     borderRadius: "12px",
-    minWidth: "220px",
+    minWidth: "0",        // removed hardcoded 220px — let flex/width handle sizing
+    width: "100%",
     padding: "2px 4px",
     boxShadow: "none",
     transition: "border-color 0.2s ease",
@@ -68,10 +69,15 @@ const selectStyles = {
   dropdownIndicator: (base) => ({
     ...base,
     color: "#71717a",
-
     "&:hover": {
       color: "#d1d1d1",
     },
+  }),
+
+  // Ensure the inner container doesn't clip or overflow
+  container: (base) => ({
+    ...base,
+    width: "100%",
   }),
 };
 
@@ -85,11 +91,8 @@ const categoryOptions = [
 
 export default function FilterBar() {
   const filterCategory = useExpenseStore((s) => s.filterCategory);
-
   const filterMonth = useExpenseStore((s) => s.filterMonth);
-
   const setFilterCategory = useExpenseStore((s) => s.setFilterCategory);
-
   const setFilterMonth = useExpenseStore((s) => s.setFilterMonth);
 
   const selectedOption = categoryOptions.find(
@@ -103,24 +106,25 @@ export default function FilterBar() {
       setFilterMonth("");
       return;
     }
-
-    // Prevent timezone month shifting bug
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
-
     setFilterMonth(`${year}-${month}`);
   };
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-      <Select
-        options={categoryOptions}
-        value={selectedOption}
-        onChange={(val) => setFilterCategory(val?.value || "All")}
-        styles={selectStyles}
-        isSearchable={false}
-      />
+    <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full">
+      {/* Category select — full width on mobile, auto on desktop */}
+      <div className="w-full sm:w-auto sm:min-w-[220px]">
+        <Select
+          options={categoryOptions}
+          value={selectedOption}
+          onChange={(val) => setFilterCategory(val?.value || "All")}
+          styles={selectStyles}
+          isSearchable={false}
+        />
+      </div>
 
+      {/* Date picker — full width on mobile, auto on desktop */}
       <DatePicker
         selected={selectedMonth}
         onChange={handleMonthChange}
@@ -129,7 +133,10 @@ export default function FilterBar() {
         placeholderText="Filter by month"
         isClearable
         popperPlacement="bottom-start"
+        wrapperClassName="w-full sm:w-auto"
         className="
+          w-full
+          bg-zinc-950
           border
           border-zinc-700
           text-[#d1d1d1]
@@ -145,6 +152,7 @@ export default function FilterBar() {
         "
       />
 
+      {/* Clear button — full width on mobile, auto on desktop */}
       {(filterCategory !== "All" || filterMonth) && (
         <button
           onClick={() => {
@@ -152,10 +160,11 @@ export default function FilterBar() {
             setFilterMonth("");
           }}
           className="
+            w-full
+            sm:w-auto
             border
             border-zinc-700
             text-zinc-400
-            placeholder-zinc-600
             rounded-xl
             px-4
             py-2.5
@@ -165,7 +174,6 @@ export default function FilterBar() {
             hover:text-[#d1d1d1]
             active:scale-95
             cursor-pointer
-            w-full
           "
         >
           Clear Filters

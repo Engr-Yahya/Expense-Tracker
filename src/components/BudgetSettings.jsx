@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useExpenseStore, { CATEGORIES } from "../store/useExpenseStore";
 import { getCurrencySymbol } from "../utils/formatCurrency";
 
@@ -11,6 +11,18 @@ export default function BudgetSettings() {
   const budgets = useExpenseStore((s) => s.budgets);
   const setBudget = useExpenseStore((s) => s.setBudget);
   const currency = useExpenseStore((s) => s.currency);
+
+  // Lock body scroll while modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   const handleOpen = () => {
     setLocalBudgets({ ...budgets });
@@ -44,16 +56,19 @@ export default function BudgetSettings() {
     <>
       <button
         onClick={handleOpen}
-        className="flex items-center gap-2 h-[44px] rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm text-zinc-400 transition-all duration-200 hover:border-zinc-600 hover:text-[#d1d1d1]"
+        className="flex items-center justify-center gap-2 w-full sm:w-auto h-[44px] rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm text-zinc-400 transition-all duration-200 hover:border-zinc-600 hover:text-[#d1d1d1]"
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
         </svg>
         {hasBudgets ? "Edit Budgets" : "Set Budgets"}
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          onClick={(e) => e.target === e.currentTarget && setIsOpen(false)}
+        >
           <div className="bg-zinc-900 rounded-2xl border border-zinc-800 w-full max-w-md max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-zinc-900 border-b border-zinc-800 px-6 py-4 flex items-center justify-between">
               <h2 className="text-lg font-semibold text-[#d1d1d1]">Set Monthly Budgets</h2>
@@ -72,7 +87,7 @@ export default function BudgetSettings() {
                     {category}
                   </label>
                   <div className="flex items-center gap-2">
-                    <span className="text-zinc-600">{getCurrencySymbol(currency)}</span>
+                    <span className="text-zinc-600 shrink-0">{getCurrencySymbol(currency)}</span>
                     <input
                       type="text"
                       value={localBudgets[category] || ""}
