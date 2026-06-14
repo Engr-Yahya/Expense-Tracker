@@ -56,7 +56,11 @@ const selectStyles = {
   }),
   option: (base, state) => ({
     ...base,
-    backgroundColor: state.isSelected ? "#d1d1d1" : state.isFocused ? "#27272a" : "transparent",
+    backgroundColor: state.isSelected
+      ? "#d1d1d1"
+      : state.isFocused
+        ? "#27272a"
+        : "transparent",
     color: state.isSelected ? "#000" : state.isFocused ? "#f8fafc" : "#a1a1aa",
     borderRadius: "8px",
     fontSize: "13px",
@@ -221,14 +225,9 @@ export default function AddExpenseForm() {
 
         {/* Amount */}
         <div className="flex flex-col gap-1.5">
-          <div className="flex items-center justify-between">
             <label className="text-xs font-medium text-zinc-500 tracking-wide">
               Amount
             </label>
-
-            <span className="text-[11px] text-zinc-600">Max $1,000,000</span>
-          </div>
-
           <div className="relative">
             <CurrencyInput
               placeholder="0.00"
@@ -280,21 +279,24 @@ export default function AddExpenseForm() {
             popperPlacement="bottom-start"
           />
         </div>
-
-        {/* Category */}
-        <Select
-          options={categoryOptions}
-          value={form.category}
-          onChange={(val) =>
-            setForm((f) => ({
-              ...f,
-              category: val,
-            }))
-          }
-          styles={selectStyles}
-          isSearchable={false}
-        />
-
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-medium text-zinc-500 tracking-wide">
+            Category
+          </label>
+          {/* Category */}
+          <Select
+            options={categoryOptions}
+            value={form.category}
+            onChange={(val) =>
+              setForm((f) => ({
+                ...f,
+                category: val,
+              }))
+            }
+            styles={selectStyles}
+            isSearchable={false}
+          />
+        </div>
         <button
           type="submit"
           className="mt-2 w-full py-3 rounded-xl text-sm font-bold tracking-widest uppercase transition-all bg-[#d1d1d1] text-black hover:bg-white active:scale-95"
